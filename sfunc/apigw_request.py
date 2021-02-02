@@ -16,6 +16,10 @@ class ApiGatewayRequest:
     def _set_metadata(self):
         if self._event is None:
             self._request_id = "m" + str(uuid.uuid4().hex)
+            self._headers = {}
+            self._params = {}
+            self._json = {}
+            self._stage_variables = {}
             return
         self._request_id = self._event.get('headers', {}).get('x-request-id', "m" + str(uuid.uuid4().hex))
         self._operation_id = self._event.get('requestContext', {}).get('operationName', None)
@@ -58,7 +62,7 @@ class ApiGatewayRequest:
         if self._json is not None:
             return self._json
 
-        if self._event.get('body', None) is None:
+        if self._event is None or self._event.get('body', None) is None:
             self._json = {}
             return self._json
 
