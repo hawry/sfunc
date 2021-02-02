@@ -17,8 +17,9 @@ jobs:
     - run:
         command: pytest
         name: Test
-    - store_test_results:
-        path: .
+    - run:
+        command: bash <(curl -s https://codecov.io/bash)
+        name: Upload code coverage
 
 workflows:
   main:

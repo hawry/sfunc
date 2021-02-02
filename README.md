@@ -1,6 +1,6 @@
 # sfunc
 
-[![PyPI version](https://badge.fury.io/py/sfunc.svg)](https://badge.fury.io/py/sfunc) [![hawry](https://circleci.com/gh/hawry/sfunc.svg?style=shield)](https://circleci.com/gh/hawry/sfunc)
+[![PyPI version](https://badge.fury.io/py/sfunc.svg)](https://badge.fury.io/py/sfunc) [![hawry](https://circleci.com/gh/hawry/sfunc.svg?style=shield)](https://circleci.com/gh/hawry/sfunc) [![codecov](https://codecov.io/gh/hawry/sfunc/branch/master/graph/badge.svg?token=WPM7BHCN24)](https://codecov.io/gh/hawry/sfunc)
 
 ## Single lambda function for AWS Api Gateway
 
