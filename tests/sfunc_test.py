@@ -1,6 +1,6 @@
 import unittest
 
-from sfunc import SFunc
+from sfunc import SFunc, ApiGatewayRequest, ApiGatewayResponse
 
 
 class SFuncTest(unittest.TestCase):
@@ -55,6 +55,31 @@ class SFuncTest(unittest.TestCase):
             return 'default_handler'
 
         self.assertEqual('default_handler', sut.execute({'requestContext': {'operationName': 'notfound'}}, None))
+
+    def test_sfunc_execute_returns_apigateway_response(self):
+        sut = SFunc()
+
+        @sut.operation('convert')
+        def convert_op(req, context):
+            return ApiGatewayResponse(200)
+
+        actual = sut.sfunc_execute(ApiGatewayRequest(request_data()), None)
+        self.assertIsInstance(actual, ApiGatewayResponse)
+
+    def test_sfunc_execute_missing_default_handler_raises_error(self):
+        sut = SFunc()
+        with self.assertRaises(ValueError):
+            sut.sfunc_execute(ApiGatewayRequest(request_data()), None)
+
+    def test_sfunc_execute_returns_default_handler(self):
+        sut = SFunc()
+
+        @sut.default()
+        def default_handler(req, context):
+            return ApiGatewayResponse(200)
+
+        actual = sut.sfunc_execute(ApiGatewayRequest(request_data()), None)
+        self.assertIsInstance(actual, ApiGatewayResponse)
 
 
 def request_data():
