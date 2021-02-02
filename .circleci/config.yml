@@ -1,0 +1,26 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  build-and-test:
+    executor: python/default
+    steps:
+    - checkout
+    - run:
+        command: pip install .
+        name: Install dependencies
+    - run:
+        command: pip install pytest pytest-cov
+        name: Install test requirements
+    - run:
+        command: pytest
+        name: Test
+    - store_test_results:
+        path: .
+
+workflows:
+  main:
+    jobs:
+    - build-and-test
