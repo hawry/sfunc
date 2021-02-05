@@ -23,6 +23,7 @@ class ApiGatewayRequest:
             return
         self._request_id = self._event.get('headers', {}).get('x-request-id', "m" + str(uuid.uuid4().hex))
         self._operation_id = self._event.get('requestContext', {}).get('operationName', None)
+        self._authorizer = self._Authorizer(self._event.get('requestContext', {}))
 
     @property
     def operation_id(self):
@@ -83,3 +84,21 @@ class ApiGatewayRequest:
 
     def has_stage_variables(self) -> bool:
         return self.stage_variables() != {}
+
+    @property
+    def authorizer(self):
+        return self._authorizer
+
+    class _Authorizer:
+        def __init__(self, request_context: {}):
+            self._request_context = request_context
+            self._principal_id = self._request_context.get('authorizer', {}).get('principalId', None)
+            self._context = self._request_context.get('authorizer', {}).get('context', None)
+
+        @property
+        def principal_id(self):
+            return self._principal_id
+
+        @property
+        def context(self):
+            return self._context

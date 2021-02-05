@@ -42,6 +42,9 @@ class ApiGatewayRequestTest(unittest.TestCase):
         self.assertTrue(self.sut.has_stage_variables())
         self.assertEqual('avalue', self.sut.stage_variables().get('aname'))
 
+    def test_get_principal_id(self):
+        self.assertEqual('1932646a-8cfb-457d-97f5-dda3aaa7e43b', self.sut.authorizer.principal_id)
+
 
 def with_params():
     event = {'resource': '/convert', 'path': '/convert', 'httpMethod': 'POST',
@@ -75,7 +78,10 @@ def with_params():
              'stageVariables': {
                  "aname": "avalue"
              },
-             'requestContext': {'resourceId': 'g2c3lv', 'resourcePath': '/convert', 'operationName': 'convert',
+             'requestContext': {'resourceId': 'g2c3lv', "authorizer": {
+                 "principalId": "1932646a-8cfb-457d-97f5-dda3aaa7e43b",
+                 "integrationLatency": 0
+             }, 'resourcePath': '/convert', 'operationName': 'convert',
                                 'httpMethod': 'POST', 'extendedRequestId': 'Znbp4GnTDoEFYeg=',
                                 'requestTime': '23/Jan/2021:19:03:39 +0000', 'path': '/live/convert',
                                 'accountId': '951170985986', 'protocol': 'HTTP/1.1', 'stage': 'live',
